@@ -122,18 +122,6 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
             }
 
             LOGGER.debug("download ok.");
-
-//            try {
-//                String url = disconfCenterItem.getRemoteServerUrl();
-//                value = fetcherMgr.getValueFromServer(url);
-//                if (value != null) {
-//                    LOGGER.debug("value: " + value);
-//                }
-//            } catch (Exception e) {
-//                LOGGER.error("cannot use remote configuration: " + keyName, e);
-//                LOGGER.info("using local variable: " + keyName);
-//            }
-
         }
 
         //
