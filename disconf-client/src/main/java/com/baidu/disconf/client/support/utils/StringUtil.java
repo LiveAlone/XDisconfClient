@@ -3,6 +3,7 @@ package com.baidu.disconf.client.support.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,6 +22,20 @@ public abstract class StringUtil {
             .toCharArray();
     private static final char[] DIGITS_NOCASE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             .toCharArray();
+
+    public static String combineString(List<String> list, String split){
+        if (list == null || list.isEmpty()){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i < list.size(); i++){
+            if (i != 0){
+                sb.append(split);
+            }
+            sb.append(list.get(i));
+        }
+        return sb.toString();
+    }
 
     /**
      * @param source

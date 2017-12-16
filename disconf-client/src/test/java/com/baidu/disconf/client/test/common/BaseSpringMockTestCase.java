@@ -1,5 +1,11 @@
 package com.baidu.disconf.client.test.common;
 
+import com.baidu.disconf.client.config.ConfigMgr;
+import com.baidu.disconf.client.config.DisClientConfig;
+import com.baidu.disconf.client.config.DisClientSysConfig;
+import com.baidu.disconf.client.test.support.utils.NetUtils;
+import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
+import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -7,14 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.baidu.disconf.client.config.ConfigMgr;
-import com.baidu.disconf.client.config.DisClientConfig;
-import com.baidu.disconf.client.config.DisClientSysConfig;
-import com.baidu.disconf.client.test.support.utils.NetUtils;
-import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
-import com.baidu.disconf.core.test.common.BaseCoreTestCase;
-
-import junit.framework.Assert;
+//import com.baidu.disconf.core.test.common.BaseCoreTestCase;
 
 /**
  * Spring的测试方法 + WireMock 方法
@@ -24,7 +23,7 @@ import junit.framework.Assert;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
-public class BaseSpringMockTestCase extends BaseCoreTestCase {
+public class BaseSpringMockTestCase{
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(BaseSpringTestCase.class);
 

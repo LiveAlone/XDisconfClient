@@ -127,7 +127,7 @@ public final class DisClientConfig {
     public static final String ENV_NAME = "disconf.env";
     @DisInnerConfigAnnotation(name = DisClientConfig.ENV_NAME, defaultValue = Constants.DEFAULT_ENV)
     public String ENV = Constants.DEFAULT_ENV;
-    public List<String> envList = new ArrayList<String>();
+    private List<String> envList = new ArrayList<String>();
 
     /**
      * 是否从云端下载配置

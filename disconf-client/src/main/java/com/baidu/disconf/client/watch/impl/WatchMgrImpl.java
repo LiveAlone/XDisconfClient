@@ -1,5 +1,8 @@
 package com.baidu.disconf.client.watch.impl;
 
+import com.baidu.disconf.client.support.utils.StringUtil;
+import com.baidu.disconf.core.common.utils.MyStringUtils;
+import com.google.common.base.Strings;
 import org.apache.zookeeper.CreateMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +63,7 @@ public class WatchMgrImpl implements WatchMgr {
             应用程序的 Zoo 根目录
         */
         String clientRootZooPath = ZooPathMgr.getZooBaseUrl(zooUrlPrefix, disConfCommonModel.getApp(),
-                disConfCommonModel.getEnvList().toString(),
+                StringUtil.combineString(disConfCommonModel.getEnvList(), "-"),
                 disConfCommonModel.getVersion());
         ZookeeperMgr.getInstance().makeDir(clientRootZooPath, ZooUtils.getIp());
 

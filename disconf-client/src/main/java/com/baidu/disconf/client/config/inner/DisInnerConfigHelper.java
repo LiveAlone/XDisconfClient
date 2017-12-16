@@ -81,12 +81,7 @@ public class DisInnerConfigHelper {
         if (envList == null){
             throw new Exception("settings " + DisClientConfig.ENV_NAME + "parse list error ");
         }
-
-        Set<String> envSet = new HashSet<String>();    // 环境去重
-        for (String s : envList) {
-            envSet.add(s.trim());
-        }
-        DisClientConfig.getInstance().setEnvList(Lists.newArrayList(envSet));
+        DisClientConfig.getInstance().setEnvList(envList);
         LOGGER.info("SERVER " + DisClientConfig.ENV_NAME + ": " + DisClientConfig.getInstance().ENV + " convert list : " + GsonUtils.toJson(envList));
 
         //
