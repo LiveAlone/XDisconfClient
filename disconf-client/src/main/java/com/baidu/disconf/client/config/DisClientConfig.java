@@ -1,5 +1,6 @@
 package com.baidu.disconf.client.config;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -118,7 +119,7 @@ public final class DisClientConfig {
     public String MAIN_TYPE;
 
     /**
-     * 部署环境
+     * 部署环境(支持多部署环境的配置方式)
      *
      * @author
      * @since 1.0.0
@@ -126,6 +127,7 @@ public final class DisClientConfig {
     public static final String ENV_NAME = "disconf.env";
     @DisInnerConfigAnnotation(name = DisClientConfig.ENV_NAME, defaultValue = Constants.DEFAULT_ENV)
     public String ENV = Constants.DEFAULT_ENV;
+    public List<String> envList = new ArrayList<String>();
 
     /**
      * 是否从云端下载配置
@@ -210,4 +212,11 @@ public final class DisClientConfig {
         this.ignoreDisconfKeySet = ignoreDisconfKeySet;
     }
 
+    public List<String> getEnvList() {
+        return envList;
+    }
+
+    public void setEnvList(List<String> envList) {
+        this.envList = envList;
+    }
 }

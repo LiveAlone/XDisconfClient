@@ -1,9 +1,12 @@
 package com.baidu.disconf.client.config.inner;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.baidu.disconf.core.common.utils.GsonUtils;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,13 +77,22 @@ public class DisInnerConfigHelper {
 
             throw new Exception("settings: " + DisClientConfig.ENV_NAME + "  cannot find");
         }
-        LOGGER.info("SERVER " + DisClientConfig.ENV_NAME + ": " + DisClientConfig.getInstance().ENV);
+        List<String> envList = StringUtil.parseStringToStringList(DisClientConfig.getInstance().ENV, ",");
+        if (envList == null){
+            throw new Exception("settings " + DisClientConfig.ENV_NAME + "parse list error ");
+        }
+
+        Set<String> envSet = new HashSet<String>();    // 环境去重
+        for (String s : envList) {
+            envSet.add(s.trim());
+        }
+        DisClientConfig.getInstance().setEnvList(Lists.newArrayList(envSet));
+        LOGGER.info("SERVER " + DisClientConfig.ENV_NAME + ": " + DisClientConfig.getInstance().ENV + " convert list : " + GsonUtils.toJson(envList));
 
         //
         // 是否使用远程的配置
         LOGGER.info("SERVER disconf.enable.remote.conf: " + DisClientConfig.getInstance().ENABLE_DISCONF);
 
-        //
         // debug mode
         LOGGER.info("SERVER disconf.debug: " + DisClientConfig.getInstance().DEBUG);
 

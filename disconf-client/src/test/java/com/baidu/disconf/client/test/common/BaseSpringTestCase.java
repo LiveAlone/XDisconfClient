@@ -29,13 +29,12 @@ public class BaseSpringTestCase {
 
     @Test
     public void pass() {
-
+        checkNetWork();
     }
 
     /**
      * @return
      */
-    @Deprecated
     protected boolean checkNetWork() {
 
         //
