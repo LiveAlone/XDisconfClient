@@ -60,7 +60,7 @@ public class WatchMgrImpl implements WatchMgr {
             应用程序的 Zoo 根目录
         */
         String clientRootZooPath = ZooPathMgr.getZooBaseUrl(zooUrlPrefix, disConfCommonModel.getApp(),
-                disConfCommonModel.getEnv(),
+                disConfCommonModel.getEnvList().toString(),
                 disConfCommonModel.getVersion());
         ZookeeperMgr.getInstance().makeDir(clientRootZooPath, ZooUtils.getIp());
 

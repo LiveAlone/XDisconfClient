@@ -24,8 +24,9 @@ public @interface DisconfFile {
 
     /**
      * 环境,默认为用户指定的环境
+     * 多环境配置我
      */
-    String env() default "";
+    String[] env() default {};
 
     /**
      * 版本,默认为用户指定的版本

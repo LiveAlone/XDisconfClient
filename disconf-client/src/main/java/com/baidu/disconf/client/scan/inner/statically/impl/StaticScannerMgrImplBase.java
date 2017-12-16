@@ -2,6 +2,9 @@ package com.baidu.disconf.client.scan.inner.statically.impl;
 
 import com.baidu.disconf.client.common.model.DisConfCommonModel;
 import com.baidu.disconf.client.config.DisClientConfig;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * @author liaoqiqi
@@ -12,7 +15,7 @@ public class StaticScannerMgrImplBase {
     /**
      * env/version 默认是应用整合设置的，但用户可以在配置中更改它
      */
-    protected static DisConfCommonModel makeDisConfCommonModel(String app, String env, String version) {
+    protected static DisConfCommonModel makeDisConfCommonModel(String app, List<String> envList, String version) {
 
         DisConfCommonModel disConfCommonModel = new DisConfCommonModel();
 
@@ -24,10 +27,10 @@ public class StaticScannerMgrImplBase {
         }
 
         // env
-        if (!env.isEmpty()) {
-            disConfCommonModel.setEnv(env);
-        } else {
-            disConfCommonModel.setEnv(DisClientConfig.getInstance().ENV);
+        if (!CollectionUtils.isEmpty(envList)){
+            disConfCommonModel.setEnvList(envList);
+        }else {
+            disConfCommonModel.setEnvList(DisClientConfig.getInstance().getEnvList());
         }
 
         // version

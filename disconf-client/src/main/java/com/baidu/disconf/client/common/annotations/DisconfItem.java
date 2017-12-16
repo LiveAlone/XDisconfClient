@@ -30,7 +30,7 @@ public @interface DisconfItem {
     /**
      * 环境,,默认为用户指定的环境
      */
-    String env() default "";
+    String[] env() default {};
 
     /**
      * 版本,默认为用户指定的app

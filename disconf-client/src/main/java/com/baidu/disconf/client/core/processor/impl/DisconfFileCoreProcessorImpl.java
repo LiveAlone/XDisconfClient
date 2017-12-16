@@ -1,11 +1,5 @@
 package com.baidu.disconf.client.core.processor.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.baidu.disconf.client.common.model.DisConfCommonModel;
 import com.baidu.disconf.client.common.model.DisconfCenterFile;
 import com.baidu.disconf.client.common.update.IDisconfUpdatePipeline;
@@ -21,6 +15,12 @@ import com.baidu.disconf.client.support.registry.Registry;
 import com.baidu.disconf.client.watch.WatchMgr;
 import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 import com.baidu.disconf.core.common.utils.GsonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 配置文件处理器实现
@@ -101,24 +101,39 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
             //
             // 下载配置
             //
-            try {
-
-                String url = disconfCenterFile.getRemoteServerUrl();
-                filePath = fetcherMgr.downloadFileFromServer(url, fileName, disconfCenterFile.getFileDir());
-
-            } catch (Exception e) {
-
-                //
-                // 下载失败了, 尝试使用本地的配置
-                //
-
-                LOGGER.error(e.toString(), e);
-                LOGGER.warn("using local properties in class path: " + fileName);
-
-                // change file path
-                filePath = fileName;
+            List<String> urls = disconfCenterFile.getRemoteServerUrls();
+            for (String url : urls) {
+                try {
+                    filePath = fetcherMgr.downloadFileFromServer(url, fileName, disconfCenterFile.getFileDir());
+                    break;
+                }catch (Exception e){
+                    // 单个url download fail
+                    LOGGER.debug("load fail url " + url);
+                    filePath = fileName;
+                }
             }
+
             LOGGER.debug("download ok.");
+
+
+//            try {
+//
+////                List<String> urls disconfCenterFile.getRemoteServerUrls();
+////                String url = disconfCenterFile.getRemoteServerUrl();
+//                filePath = fetcherMgr.downloadFileFromServer(url, fileName, disconfCenterFile.getFileDir());
+//
+//            } catch (Exception e) {
+//
+//                //
+//                // 下载失败了, 尝试使用本地的配置
+//                //
+//
+//                LOGGER.error(e.toString(), e);
+//                LOGGER.warn("using local properties in class path: " + fileName);
+//
+//                // change file path
+//                filePath = fileName;
+//            }
         }
 
         try {

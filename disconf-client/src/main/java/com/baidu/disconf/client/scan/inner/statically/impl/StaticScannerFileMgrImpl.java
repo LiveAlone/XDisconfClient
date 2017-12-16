@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,18 +106,21 @@ public class StaticScannerFileMgrImpl extends StaticScannerMgrImplBase implement
         //
         // disConfCommonModel
         DisConfCommonModel disConfCommonModel =
-                makeDisConfCommonModel(disconfFileAnnotation.app(), disconfFileAnnotation.env(), disconfFileAnnotation
-                        .version());
+                makeDisConfCommonModel(disconfFileAnnotation.app(), Arrays.asList(disconfFileAnnotation.env()), disconfFileAnnotation.version());
         disconfCenterFile.setDisConfCommonModel(disConfCommonModel);
 
         // Remote URL
-        String url = DisconfWebPathMgr.getRemoteUrlParameter(DisClientSysConfig.getInstance().CONF_SERVER_STORE_ACTION,
-                disConfCommonModel.getApp(),
-                disConfCommonModel.getVersion(),
-                disConfCommonModel.getEnv(),
-                disconfCenterFile.getFileName(),
-                DisConfigTypeEnum.FILE);
-        disconfCenterFile.setRemoteServerUrl(url);
+        List<String> urls = new ArrayList<String>(disConfCommonModel.getEnvList().size());
+        for (String env : disConfCommonModel.getEnvList()) {
+            String url = DisconfWebPathMgr.getRemoteUrlParameter(DisClientSysConfig.getInstance().CONF_SERVER_STORE_ACTION,
+                    disConfCommonModel.getApp(),
+                    disConfCommonModel.getVersion(),
+                    env,
+                    disconfCenterFile.getFileName(),
+                    DisConfigTypeEnum.FILE);
+            urls.add(url);
+        }
+        disconfCenterFile.setRemoteServerUrls(urls);
 
         // fields
         Field[] expectedFields = disconfFileClass.getDeclaredFields();

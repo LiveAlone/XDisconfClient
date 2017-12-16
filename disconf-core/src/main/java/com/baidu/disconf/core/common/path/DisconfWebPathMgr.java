@@ -24,7 +24,11 @@ public class DisconfWebPathMgr {
      *
      * @return
      */
-    public static String getRemoteUrlParameter(String urlPrefix, String app, String version, String env, String key,
+    public static String getRemoteUrlParameter(String urlPrefix,
+                                               String app,
+                                               String version,
+                                               String env,
+                                               String key,
                                                DisConfigTypeEnum disConfigTypeEnum) {
 
         Map<String, String> parameterMap = getConfServerBasePathMap(app, version, env, key);

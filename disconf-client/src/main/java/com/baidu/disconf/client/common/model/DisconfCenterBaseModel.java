@@ -1,5 +1,7 @@
 package com.baidu.disconf.client.common.model;
 
+import java.util.List;
+
 /**
  * 配置基类
  *
@@ -12,7 +14,8 @@ public abstract class DisconfCenterBaseModel {
     private Object object;
 
     // 远程配置服务的URL路径,不包含IP和PORT的
-    private String remoteServerUrl;
+    //
+    private List<String> remoteServerUrls;
 
     // 通用配置
     private DisConfCommonModel disConfCommonModel = new DisConfCommonModel();
@@ -36,12 +39,12 @@ public abstract class DisconfCenterBaseModel {
         this.disconfCommonCallbackModel = disconfCommonCallbackModel;
     }
 
-    public String getRemoteServerUrl() {
-        return remoteServerUrl;
+    public List<String> getRemoteServerUrls() {
+        return remoteServerUrls;
     }
 
-    public void setRemoteServerUrl(String remoteServerUrl) {
-        this.remoteServerUrl = remoteServerUrl;
+    public void setRemoteServerUrls(List<String> remoteServerUrls) {
+        this.remoteServerUrls = remoteServerUrls;
     }
 
     public Object getObject() {
@@ -54,12 +57,12 @@ public abstract class DisconfCenterBaseModel {
 
     @Override
     public String toString() {
-        return "\n\tDisconfCenterBaseModel [\n\tobject=" + object + "\n\tremoteServerUrl=" + remoteServerUrl +
+        return "\n\tDisconfCenterBaseModel [\n\tobject=" + object + "\n\tremoteServerUrls=" + remoteServerUrls +
                    "\n\tdisConfCommonModel=" + disConfCommonModel + "\n\tdisconfCommonCallbackModel=" +
                    disconfCommonCallbackModel + "]";
     }
 
     public String infoString() {
-        return "\n\tremoteServerUrl=" + remoteServerUrl;
+        return "\n\tremoteServerUrls=" + remoteServerUrls;
     }
 }

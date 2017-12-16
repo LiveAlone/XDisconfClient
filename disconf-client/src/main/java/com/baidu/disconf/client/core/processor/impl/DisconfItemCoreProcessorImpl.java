@@ -1,8 +1,5 @@
 package com.baidu.disconf.client.core.processor.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.baidu.disconf.client.common.model.DisConfCommonModel;
 import com.baidu.disconf.client.common.model.DisconfCenterItem;
 import com.baidu.disconf.client.common.update.IDisconfUpdatePipeline;
@@ -16,6 +13,10 @@ import com.baidu.disconf.client.store.processor.model.DisconfValue;
 import com.baidu.disconf.client.support.registry.Registry;
 import com.baidu.disconf.client.watch.WatchMgr;
 import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * 配置项处理器实现
@@ -107,17 +108,32 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
             //
             // 下载配置
             //
-            try {
-                String url = disconfCenterItem.getRemoteServerUrl();
-                value = fetcherMgr.getValueFromServer(url);
-                if (value != null) {
-                    LOGGER.debug("value: " + value);
+            List<String> urls = disconfCenterItem.getRemoteServerUrls();
+            for (String url : urls) {
+                try {
+                    value = fetcherMgr.getValueFromServer(url);
+                    if (value != null) {
+                        LOGGER.debug("value: " + value);
+                    }
+                    break;
+                } catch (Exception e) {
+                    LOGGER.info("error load url from remote " + url);
                 }
-            } catch (Exception e) {
-                LOGGER.error("cannot use remote configuration: " + keyName, e);
-                LOGGER.info("using local variable: " + keyName);
             }
+
             LOGGER.debug("download ok.");
+
+//            try {
+//                String url = disconfCenterItem.getRemoteServerUrl();
+//                value = fetcherMgr.getValueFromServer(url);
+//                if (value != null) {
+//                    LOGGER.debug("value: " + value);
+//                }
+//            } catch (Exception e) {
+//                LOGGER.error("cannot use remote configuration: " + keyName, e);
+//                LOGGER.info("using local variable: " + keyName);
+//            }
+
         }
 
         //

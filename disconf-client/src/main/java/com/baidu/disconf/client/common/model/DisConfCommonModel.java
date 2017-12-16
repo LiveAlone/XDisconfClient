@@ -1,5 +1,7 @@
 package com.baidu.disconf.client.common.model;
 
+import java.util.List;
+
 /**
  * 通用的模型数据，包括 APP，版本，环境，Zookeeper上的URL表示
  *
@@ -15,7 +17,7 @@ public class DisConfCommonModel {
     private String version;
 
     // 环境
-    private String env;
+    private List<String> envList;
 
     public String getApp() {
         return app;
@@ -33,17 +35,20 @@ public class DisConfCommonModel {
         this.version = version;
     }
 
-    public String getEnv() {
-        return env;
+    public List<String> getEnvList() {
+        return envList;
     }
 
-    public void setEnv(String env) {
-        this.env = env;
+    public void setEnvList(List<String> envList) {
+        this.envList = envList;
     }
 
     @Override
     public String toString() {
-        return "DisConfCommonModel [app=" + app + ", version=" + version + ", env=" + env + "]";
+        return "DisConfCommonModel{" +
+                "app='" + app + '\'' +
+                ", version='" + version + '\'' +
+                ", envList=" + envList +
+                '}';
     }
-
 }

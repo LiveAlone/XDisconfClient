@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -122,17 +123,22 @@ public class StaticScannerItemMgrImpl extends StaticScannerMgrImplBase implement
 
         //
         // disConfCommonModel
-        DisConfCommonModel disConfCommonModel = makeDisConfCommonModel(disconfItem.app(), disconfItem.env(),
+        DisConfCommonModel disConfCommonModel = makeDisConfCommonModel(disconfItem.app(),  Arrays.asList(disconfItem.env()),
                 disconfItem.version());
         disconfCenterItem.setDisConfCommonModel(disConfCommonModel);
 
         // Disconf-web url
-        String url = DisconfWebPathMgr.getRemoteUrlParameter(DisClientSysConfig.getInstance().CONF_SERVER_STORE_ACTION,
-                disConfCommonModel.getApp(),
-                disConfCommonModel.getVersion(),
-                disConfCommonModel.getEnv(), key,
-                DisConfigTypeEnum.ITEM);
-        disconfCenterItem.setRemoteServerUrl(url);
+        List<String> urls = new ArrayList<String>(disConfCommonModel.getEnvList().size());
+        for (String env : disConfCommonModel.getEnvList()) {
+            String url = DisconfWebPathMgr.getRemoteUrlParameter(DisClientSysConfig.getInstance().CONF_SERVER_STORE_ACTION,
+                    disConfCommonModel.getApp(),
+                    disConfCommonModel.getVersion(),
+                    env,
+                    key,
+                    DisConfigTypeEnum.ITEM);
+            urls.add(url);
+        }
+        disconfCenterItem.setRemoteServerUrls(urls);
 
         return disconfCenterItem;
     }
